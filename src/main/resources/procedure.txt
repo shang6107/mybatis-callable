@@ -1,0 +1,34 @@
+DROP PROCEDURE IF EXISTS `new_tbl`;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `new_tbl`(in dname VARCHAR(32))
+BEGIN
+		SET @tblsql = CONCAT("create table ", dname, ".tbls (
+														`id` int PRIMARY KEY,
+														`name` VARCHAR(32)
+													)");
+		PREPARE stmt FROM @tblsql;
+		EXECUTE stmt;
+		DEALLOCATE PREPARE stmt;
+END;
+
+DROP PROCEDURE IF EXISTS `new_tbl`;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `new_tbl`(in dname VARCHAR(32))
+BEGIN
+		SET @tblsql = CONCAT("create table ", dname, ".tbls (
+														`id` int PRIMARY KEY,
+														`name` VARCHAR(32)
+													)");
+		PREPARE stmt FROM @tblsql;
+		EXECUTE stmt;
+		DEALLOCATE PREPARE stmt;
+END;
+
+DROP PROCEDURE IF EXISTS `new_db`;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `new_db`(in dname VARCHAR(32))
+BEGIN
+		set @dbsql = CONCAT('create database ', dname);
+		PREPARE stmt FROM @dbsql;
+		EXECUTE stmt;
+		DEALLOCATE prepare stmt;
+		CALL new_tbl(dname);
+		CALL new_tbl1(dname);
+END;
